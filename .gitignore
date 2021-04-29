@@ -144,3 +144,5 @@ inventory/*
 
 host_vars/*
 !host_vars/.gitkeep
+
+settings.json
