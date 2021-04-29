@@ -1,0 +1,9 @@
+- name: Install required system utilities.
+  apt:
+    name: ['gnupg', 'git']
+
+- name: Set vm.swappiness to recommended value by MongoDB team.
+  sysctl:
+    name: vm.swappiness
+    value: '1'
+    state: present

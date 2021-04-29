@@ -1,0 +1,9 @@
+---
+- name: "Set up a Rocketchat Server"
+  hosts: rocketchat_nodes
+  become: true
+
+  roles:
+    - common
+    - mongodb
+    - rocketchat

@@ -1,0 +1,26 @@
+- name: Add MongoDB apt key
+  apt_key:
+    url: https://www.mongodb.org/static/pgp/server-4.4.asc
+    state: present
+
+- name: Add MongoDB repository
+  apt_repository:
+    repo: deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/4.4 multiverse
+    state: present
+    filename: mongodb
+
+- name: Reload apt cache
+  apt:
+    update_cache: yes
+    cache_valid_time: 60000
+
+- name: Install MongoDB package
+  apt:
+    name: mongodb-org
+    state: present
+
+- name: Start and enable service
+  service:
+    name: mongod
+    state: started
+    enabled: yes
