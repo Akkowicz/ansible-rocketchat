@@ -1,0 +1,12 @@
+- name: Ensure npm global packages are installed.
+  npm:
+    name: "{{ item.name | default(item) }}"
+    version: "{{ item.version | default('latest') }}"
+    global: true
+    state: latest
+  with_items: "{{ nodejs_npm_global_packages }}"
+
+- name: Install latest NodeJS version
+  shell: "n {{ nodejs_version }}"
+  args:
+    creates: "/usr/local/n/versions/node/{{ nodejs_version }}"

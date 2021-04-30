@@ -1,0 +1,5 @@
+nodejs_version: "12.22.1"
+
+nodejs_npm_global_packages:
+  - inherits
+  - n
