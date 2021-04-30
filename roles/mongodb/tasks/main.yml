@@ -8,11 +8,12 @@
     repo: deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/4.4 multiverse
     state: present
     filename: mongodb
+  register: mongo_repo
 
 - name: Reload apt cache
   apt:
     update_cache: yes
-    cache_valid_time: 60000
+  when: mongo_repo.changed
 
 - name: Install MongoDB package
   apt:
