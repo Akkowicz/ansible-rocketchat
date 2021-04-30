@@ -1,0 +1,33 @@
+- name: Create rocketchat group
+  group:
+    name: rocketchat
+    gid: 1060
+
+- name: Create rocketchat user
+  user:
+    name: rocketchat
+    comment: RocketChat
+    uid: 1060
+    group: rocketchat
+    password_lock: yes
+
+- name: Create a directory if it does not exist
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: rocketchat
+    group: rocketchat
+    mode: '0750'
+  with_items:
+    - /opt/Rocket.Chat
+    - /opt/Rocket.Chat/releases
+    - /opt/Rocket.Chat/uploads
+    - "/opt/Rocket.Chat/releases/{{ rocketchat_version }}"
+
+- name: Download and unarchive RocketChat release files.
+  unarchive:
+    src: "https://releases.rocket.chat/{{ rocketchat_version }}/download"
+    dest: "/opt/Rocket.Chat/releases/{{ rocketchat_version }}"
+    remote_src: yes
+  become: yes
+  become_user: rocketchat

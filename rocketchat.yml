@@ -6,4 +6,5 @@
   roles:
     - common
     - mongodb
+    - nodejs
     - rocketchat
