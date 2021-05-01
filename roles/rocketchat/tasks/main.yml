@@ -21,13 +21,36 @@
   with_items:
     - /opt/Rocket.Chat
     - /opt/Rocket.Chat/releases
+    - /opt/Rocket.Chat/builds
     - /opt/Rocket.Chat/uploads
     - "/opt/Rocket.Chat/releases/{{ rocketchat_version }}"
+    - "/opt/Rocket.Chat/builds/{{ rocketchat_version }}"
 
 - name: Download and unarchive RocketChat release files.
   unarchive:
     src: "https://releases.rocket.chat/{{ rocketchat_version }}/download"
     dest: "/opt/Rocket.Chat/releases/{{ rocketchat_version }}"
     remote_src: yes
+    creates: "/opt/Rocket.Chat/releases/{{ rocketchat_version }}/bundle"
   become: yes
   become_user: rocketchat
+
+- name: Build RocketChat app
+  npm:
+    path: "/opt/Rocket.Chat/releases/{{ rocketchat_version }}/bundle/programs/server"
+    state: present
+  become: yes
+  become_user: rocketchat
+
+- name: Move app build to appropriate folder
+  copy:
+    remote_src: true
+    src: "/opt/Rocket.Chat/releases/{{ rocketchat_version }}/bundle/"
+    dest: "/opt/Rocket.Chat/builds/{{ rocketchat_version }}"
+  become: yes
+  become_user: rocketchat
+
+- name: Create service file for RocketChat
+  template:
+    src: rocketchat@.service.j2
+    dest: /etc/systemd/system/rocketchat@.service
