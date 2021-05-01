@@ -31,3 +31,6 @@
     name: mongod
     state: started
     enabled: yes
+
+- name: Restart mongod if needed
+  meta: flush_handlers
