@@ -20,7 +20,13 @@
     name: mongodb-org
     state: present
 
-- name: Start and enable service
+- name: Configure mongod
+  template:
+    src: mongod.conf.j2
+    dest: /etc/mongod.conf
+  notify: Restart mongod
+
+- name: Ensure that mongod is started and enabled
   service:
     name: mongod
     state: started
