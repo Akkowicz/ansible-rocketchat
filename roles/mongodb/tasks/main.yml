@@ -34,3 +34,11 @@
 
 - name: Restart mongod if needed
   meta: flush_handlers
+
+- name: Ensure replicaset rs01 exists
+  community.mongodb.mongodb_replicaset:
+    login_host: localhost
+    replica_set: rs01
+    validate: no
+    members:
+    - 127.0.0.1:27017

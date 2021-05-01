@@ -1,6 +1,6 @@
 - name: Install required system utilities.
   apt:
-    name: ['gnupg', 'git', 'apt-transport-https', 'curl', 'build-essential', 'nodejs', 'npm', 'graphicsmagick']
+    name: ['gnupg', 'git', 'apt-transport-https', 'curl', 'build-essential', 'nodejs', 'npm', 'graphicsmagick', 'python3-pymongo']
 
 - name: Set vm.swappiness to recommended value by MongoDB team.
   sysctl:
